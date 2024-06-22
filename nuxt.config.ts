@@ -4,6 +4,7 @@ import { resolve } from 'path';
 export default defineNuxtConfig({
   devtools: { enabled: true },
   extends: ['shadcn-docs-nuxt'],
+  modules: ["@nuxthq/studio"],
   content: {
     sources: {
       // content: {
