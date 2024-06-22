@@ -1,0 +1,3 @@
+[submodule "legislation"]
+	path = legislation
+	url = https://github.com/Samland-Gov/legislation
