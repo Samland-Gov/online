@@ -30,11 +30,4 @@ While not much has happened in Samland, it holds a unique and interesting place 
   ---
   Legislation is important to Samland - it is made to ensure safety and growth.
   ::
-  ::card
-  ---
-  title: The Constitution
-  to: constitution
-  ---
-  The Constitution is the founding piece of legislation, it is the starting place for all rules and legislation.
-  ::
 ::

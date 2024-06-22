@@ -22,12 +22,7 @@ export default defineAppConfig({
           title: 'Legislation',
           to: '/legislation',
           target: undefined,
-        },
-        {
-          title: 'The Constitution',
-          to: '/constitution',
-          target: undefined,
-        },
+        }
       ],
       links: [
         {

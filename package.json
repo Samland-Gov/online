@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "node post-install.js && nuxt prepare"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "nuxt": "^3.12.1",

@@ -18,5 +18,5 @@ async function buildContentDirectory(source, dest, type) {
         await symlink(sourceFolder, symlinkPath, type);
     }
 }
-buildContentDirectory("legislation/constitution.md", "1.constitution.md", "file")
+// buildContentDirectory("legislation/constitution.md", "1.constitution.md", "file")
 // buildContentDirectory("legislation/content", "2.legislation", "dir")
