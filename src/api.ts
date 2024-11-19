@@ -52,7 +52,7 @@ async function create_expression(data: any, work: Work) {
         title: data['title'],
         languageCode: data['language'],
         date: data['expression_date'],
-        content: await (await request_with_token(`${data["url"]}.xml`)).text(),
+        content: await (await request_with_token(`${data["url"]}.html`)).text(),
         tocJson: await (await request_with_token(`${data["url"]}/toc.json`)).json()
     };
     work.expressions.push(expression);
