@@ -1,5 +1,5 @@
 ---
-import { pull_works } from "../api"
+import { pull_works, default_expression } from "../api"
 
 let works = await pull_works();
 ---
@@ -15,10 +15,15 @@ let works = await pull_works();
 	<body>
 		<h1>Samland</h1>
 		<h2>Legislation</h2>
-		<ul>
+		<table>
 			{works.map(work => (
-				<li><a href={`works/${work.frbrUri}`}>{work.title}</a></li>
+				<tr>
+					<td>
+						<a href={`expression${default_expression(work)?.frbrUri}`}>{default_expression(work)?.title}</a>
+					</td>
+					<td>{work.frbrUri}</td>
+				</tr>
 			))}
-		</ul>
+		</table>
 	</body>
 </html>

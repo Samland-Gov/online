@@ -1,0 +1,68 @@
+---
+import { pull_works } from "../../api";
+import { type Expression } from "../../models";
+import '../../law_widget_styles.css';
+
+
+export async function getStaticPaths() {
+	const works = await pull_works();
+	let result = [] as any[]
+	for (const work of works) {
+		for (const expression of work.expressions) {
+			result.push({params: {slug: expression.frbrUri}});
+		}
+	}
+	return result
+}
+
+async function geExpression(frbrUri: string): Promise<Expression | undefined> {
+	const works = await pull_works();
+	for (const work of works) {
+		for (const expression of work.expressions) {
+			if (expression.frbrUri = frbrUri) {
+				return expression;
+			}
+		}
+	}
+
+	return undefined;
+}
+
+const { slug } = Astro.params;
+const expression = await geExpression(slug)
+const tocJson = JSON.stringify(expression?.tocJson["toc"]);
+console.log(tocJson)
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Samland - {expression?.title}</title>
+		<script
+			type="module"
+			src="https://cdn.jsdelivr.net/npm/@lawsafrica/law-widgets@latest/dist/lawwidgets/lawwidgets.esm.js"
+		></script>
+	</head>
+	<body>
+		<h1>Samland</h1>
+		<h2>{expression?.title}</h2>
+		<hr/>
+	
+		<div style="display: flex">
+			<aside style="flex: 1">
+				<la-table-of-contents-controller
+				  items={tocJson}
+				  style="position: sticky; top: 0; max-height: 100vh; overflow-y: auto;"
+				></la-table-of-contents-controller>
+			</aside>
+			<div style="flex: 3">
+				<la-decorate-terms popup-definitions link-terms></la-decorate-terms>
+				<la-decorate-internal-refs popups flag></la-decorate-internal-refs>
+				<la-akoma-ntoso frbr-expression-uri={ expression?.frbrUri } set:html={expression?.content}></la-akoma-ntoso >
+			</div>
+		</div>
+	</body>
+</html>
