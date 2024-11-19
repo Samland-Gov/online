@@ -7,16 +7,30 @@ let works = await pull_works();
 ---
 
 <Layout title="Home">
-	<h1>Samland</h1>
-	<h2>Legislation</h2>
-	<table>
-		{works.map(work => (
-			<tr>
-				<td>
-					<a href={`expression${default_expression(work)?.frbrUri}`}>{default_expression(work)?.title}</a>
-				</td>
-				<td>{work.frbrUri}</td>
-			</tr>
-		))}
-	</table>
+	<section class="hero is-info">
+		<div class="hero-body">
+			<p class="title">The official home of the Samland Government</p>
+		</div>
+	</section>
+	<section class="section">
+		<h2>All legislation</h2>
+		<table class="table">
+			<thead>
+				<th>Date</th>
+				<th>Title</th>
+				<th>FRBR URI</th>
+				<th>Latest FRBR URI</th>
+			</thead>
+			{works.map(work => (
+				<tr>
+					<td>{default_expression(work)?.date}</td>
+					<td>
+						<a href={`expression${default_expression(work)?.frbrUri}`}>{default_expression(work)?.title}</a>
+					</td>
+					<td>{work.frbrUri}</td>
+					<td>{default_expression(work)?.frbrUri}</td>
+				</tr>
+			))}
+		</table>
+	</section>
 </Layout>

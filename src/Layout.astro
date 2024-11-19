@@ -40,6 +40,17 @@ const {title} = Astro.props;
 			</div>
 		</nav>
 		<slot/>
+		<footer class="footer">
+			<div class="content has-text-centered">
+				<p>
+					<strong>Samland</strong> by <a href="https://github.com/ajh123">Samuel Hulme</a>.
+					The website content is licensed
+					<a href="https://creativecommons.org/licenses/by-nc-sa/4.0//"
+					>CC BY NC SA 4.0</a
+					>.
+				</p>
+			</div>
+		</footer>
 		<script>
 			document.addEventListener('DOMContentLoaded', () => {
 				// Get all "navbar-burger" elements
