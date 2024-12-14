@@ -1,4 +1,5 @@
 export interface Work {
+    default_expression: Expression | undefined;
     frbrUri: string;
     title: string;
     metadata: any;

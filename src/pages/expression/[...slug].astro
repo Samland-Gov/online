@@ -1,13 +1,15 @@
 ---
-import { pull_works } from "../../api";
-import { type Expression } from "../../models";
+import { type Expression, type Work } from "../../api/legislation/models";
+import { getCollection } from 'astro:content';
 import Layout from "../../Layout.astro";
 
 
 export async function getStaticPaths() {
-	const works = await pull_works();
+	const all_legislation = await getCollection('legislation');
+	const works = all_legislation;
 	let result = [] as any[]
-	for (const work of works) {
+	for (const data of works) {
+		const work = data.data as Work;
 		for (const expression of work.expressions) {
 			result.push({params: {slug: expression.frbrUri}});
 		}
@@ -15,9 +17,10 @@ export async function getStaticPaths() {
 	return result
 }
 
-async function geExpression(frbrUri: string): Promise<Expression | undefined> {
-	const works = await pull_works();
-	for (const work of works) {
+async function getExpression(frbrUri: string): Promise<Expression | undefined> {
+	const all_legislation = await getCollection('legislation')
+	for (const data of all_legislation) {
+		const work = data.data as Work;
 		for (const expression of work.expressions) {
 			if (expression.frbrUri == `/${frbrUri}`) {
 				return expression;
@@ -29,7 +32,7 @@ async function geExpression(frbrUri: string): Promise<Expression | undefined> {
 }
 
 const { slug } = Astro.params;
-const expression = await geExpression(slug)
+const expression = await getExpression(slug)
 const tocJson = JSON.stringify(expression?.tocJson["toc"]);
 ---
 

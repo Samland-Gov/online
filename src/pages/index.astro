@@ -1,9 +1,8 @@
 ---
-import { pull_works, default_expression } from "../api"
+import { getCollection } from 'astro:content';
 import Layout from "../Layout.astro";
 
-
-let works = await pull_works();
+const works = await getCollection('legislation');
 ---
 
 <Layout title="Home">
@@ -23,12 +22,12 @@ let works = await pull_works();
 			</thead>
 			{works.map(work => (
 				<tr>
-					<td>{default_expression(work)?.date}</td>
+					<td>{work.data.default_expression?.date}</td>
 					<td>
-						<a href={`expression${default_expression(work)?.frbrUri}`}>{default_expression(work)?.title}</a>
+						<a href={`expression${work.data.default_expression?.frbrUri}`}>{work.data.default_expression?.title}</a>
 					</td>
-					<td>{work.frbrUri}</td>
-					<td>{default_expression(work)?.frbrUri}</td>
+					<td>{work.data.frbrUri}</td>
+					<td>{work.data.default_expression?.frbrUri}</td>
 				</tr>
 			))}
 		</table>
