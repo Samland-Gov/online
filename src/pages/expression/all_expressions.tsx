@@ -7,6 +7,7 @@ import {
   Breadcrumb,
   BreadcrumbItem,
 } from '@carbon/react';
+import Link from 'next/link';
 
 const headers = [
   'Title',
@@ -17,15 +18,17 @@ const headers = [
 
 function convertToCarbonRows(expressions: Expression[]) {
   const rows = [];
-  for (const expression of expressions) {
-    rows.push({
-      id: expression.frbrUri,
-      title: expression.title,
-      date: new Date(expression.date).toDateString(),
-      frbrUri: expression.frbrUri,
-      languageCode: expression.languageCode,
-      href: `/expression${expression.frbrUri}`
-    })
+  if (expressions) {
+    for (const expression of expressions) {
+      rows.push({
+        id: expression.frbrUri,
+        title: expression.title,
+        date: new Date(expression.date).toDateString(),
+        frbrUri: expression.frbrUri,
+        languageCode: expression.languageCode,
+        href: `/expression${expression.frbrUri}`
+      })
+    }
   }
 
   return rows;
@@ -38,10 +41,10 @@ export default function AllExpressionsPage({expressions}: {expressions: Expressi
       <Content>
         <Breadcrumb noTrailingSlash aria-label="Page navigation">
           <BreadcrumbItem>
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
           </BreadcrumbItem>
           <BreadcrumbItem>
-            <a href="/expression">Legislation</a>
+            <Link href="/expression">Legislation</Link>
           </BreadcrumbItem>
         </Breadcrumb>
         <TableOfData

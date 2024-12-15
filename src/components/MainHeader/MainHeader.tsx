@@ -17,10 +17,11 @@ import {
 
 import { Switcher, Notification, UserAvatar } from '@carbon/icons-react';
 import Link from 'next/link';
+import { MouseEventHandler } from 'react';
 
 interface HeaderRenderProps {
-    isSideNavExpanded: any;
-    onClickSideNavExpand: any;
+    isSideNavExpanded: boolean;
+    onClickSideNavExpand: MouseEventHandler<HTMLButtonElement>;
 }
 
 const nav = [
@@ -49,8 +50,8 @@ export const MainHeader = () => (
                 </Link>
                 <HeaderNavigation aria-label="Main navigation">
                     {nav.map(item => (
-                        <Link href={item.path} passHref legacyBehavior>
-                            <HeaderMenuItem key={item.name}>{item.name}</HeaderMenuItem>
+                        <Link href={item.path} key={item.name} passHref legacyBehavior>
+                            <HeaderMenuItem>{item.name}</HeaderMenuItem>
                         </Link>
                     ))}
                 </HeaderNavigation>
@@ -62,8 +63,8 @@ export const MainHeader = () => (
                     <SideNavItems>
                         <HeaderSideNavItems>
                         {nav.map(item => (
-                            <Link href={item.path} passHref legacyBehavior>
-                                <HeaderMenuItem key={item.name}>{item.name}</HeaderMenuItem>
+                            <Link href={item.path} key={item.name} passHref legacyBehavior>
+                                <HeaderMenuItem>{item.name}</HeaderMenuItem>
                             </Link>
                         ))}
                         </HeaderSideNavItems>

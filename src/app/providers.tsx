@@ -3,7 +3,8 @@
 import { MainHeader } from "@/components/MainHeader/MainHeader";
 import { Theme } from '@carbon/react';
 
-import './global.scss';
+import '../styles/global.scss';
+import '../styles/law_widget_styles.css';
 
 export default function Providers({
   children,

@@ -2,9 +2,15 @@ export interface Work {
     default_expression: Expression | undefined;
     frbrUri: string;
     title: string;
-    metadata: any;
+    metadata: unknown;
     expressions: Expression[];
 }
+
+interface NodeData {
+    title: string;
+    id: string;
+    children?: NodeData[];
+};
 
 export interface Expression {
     work: Work;
@@ -13,5 +19,7 @@ export interface Expression {
     languageCode: string;
     date: string;
     content: string;
-    tocJson: any;
+    tocJson: {
+        toc: NodeData[]
+    };
 }

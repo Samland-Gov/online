@@ -29,7 +29,7 @@ export class IndigoClient {
         return response;
     }
 
-    private async create_expression(data: any, work: Work) {
+    private async create_expression(data: Record<string, string>, work: Work) {
         const expression: Expression = {
             work: work,
             frbrUri: data['expression_frbr_uri'],
@@ -46,7 +46,7 @@ export class IndigoClient {
         const works = [] as Work[];
         let url = this.base_url;
         while (url != null) {
-            let resp = await (await this.request_with_token(url)).json();
+            const resp = await (await this.request_with_token(url)).json();
             for (const result of resp["results"]) {
                 const expressions = [] as Expression[];
                 const work: Work = {

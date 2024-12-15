@@ -12,7 +12,7 @@ interface TableOfContentsProps {
   label: string;
 };
 
-export const TableOfContents = ({ data, label }: TableOfContentsProps) => {
+const TableOfContents = ({ data, label }: TableOfContentsProps) => {
     const router = useRouter();
     const handleRowClick = (link?: string) => {
         if (link) {
@@ -33,10 +33,17 @@ export const TableOfContents = ({ data, label }: TableOfContentsProps) => {
         ));
     };
 
+    if (data) {
+        return (
+            <TreeView label={label}>
+                {renderTreeNodes(data)}
+            </TreeView>
+        );
+    }
     return (
-        <TreeView label={label}>
-            {renderTreeNodes(data)}
-        </TreeView>
+        <>
+        </>
     );
 };
 
+export default TableOfContents;

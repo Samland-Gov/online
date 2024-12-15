@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
 import Providers from "./providers";
-import './global.scss';
+import '../styles/global.scss';
+import '../styles/law_widget_styles.css';
 
 export const metadata: Metadata = {
   title: "Samland Government",
@@ -16,8 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script src="https://cdn.jsdelivr.net/npm/@lawsafrica/law-widgets@latest/dist/lawwidgets/lawwidgets.esm.js" type="module"></script>
-        <link rel="stylesheet" href="/law_widget_styles.css" />
+        <script src="https://cdn.jsdelivr.net/npm/@lawsafrica/law-widgets@latest/dist/lawwidgets/lawwidgets.esm.js" type="module" defer></script>
       </head>
       <body>
         <div>

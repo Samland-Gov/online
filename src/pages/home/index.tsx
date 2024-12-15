@@ -18,6 +18,7 @@ import {
 
 import Image from 'next/image';
 import { GraphTilesContainer, GraphTile } from '@/components/GraphTile/GraphTile';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -28,7 +29,7 @@ export default function HomePage() {
             <Column lg={16} md={8} sm={4} className="landing-page__banner">
               <Breadcrumb noTrailingSlash aria-label="Page navigation">
                 <BreadcrumbItem>
-                  <a href="/">Home</a>
+                  <Link href="/">Home</Link>
                 </BreadcrumbItem>
               </Breadcrumb>
               <h1 className="landing-page__heading">Welcome to Samland!</h1>
@@ -65,7 +66,7 @@ export default function HomePage() {
               <InfoSection heading="The Principles">
                 <InfoCard
                   heading="Samland is Inclusive"
-                  body="Ensuring equal opportunities and fair representation for all citizens, virtual or real."
+                  body="Ensuring equal opportunities and fair representation for all citizens."
                   icon={() => <Advocate/>}
                 />
                 <InfoCard
