@@ -43,7 +43,7 @@ export class IndigoClient {
     }
 
     public async pull_works(): Promise<Work[]> {
-        let works = [] as Work[];
+        const works = [] as Work[];
         let url = this.base_url;
         while (url != null) {
             let resp = await (await this.request_with_token(url)).json();
@@ -68,6 +68,31 @@ export class IndigoClient {
             url = resp["next"];
         }
         return works;
+    }
+
+    public async pull_expressions(): Promise<Expression[]> {
+        const expressions = [] as Expression[];
+        const works = await this.pull_works();
+        for (const work of works) {
+            for (const exp of work.expressions) {
+                expressions.push(exp);//frbrUri
+            }
+        }
+
+        return expressions;
+    }
+
+    public async pull_expression(frbrUri: string): Promise<Expression | undefined> {
+        let expression = undefined;
+        const expressions = await this.pull_expressions();
+        for (const exp of expressions) {
+            if (exp.frbrUri == frbrUri) {
+                expression = exp;
+                break;
+            }
+        }
+
+        return expression;
     }
     
     public default_expression(work: Work): Expression | undefined {

@@ -1,11 +1,17 @@
-"use client"
+import { IndigoClient } from "@/api/legislation/api";
+import AllExpressionsPage from "@/pages/expression/all_expressions";
+import { Metadata } from "next";
 
-import { Button } from '@carbon/react';
+export const metadata: Metadata = {
+  title: "Legislation - Samland Government",
+  description: "All of the Legislation for Samland.",
+};
 
-export default function Expression() {
+const client = new IndigoClient("https://legislation.minersonline.uk/api/v3/akn/zl/.json", (process.env.PRIVATE_INDIGO_API_KEY as unknown as string), "en");
+
+export default async function Expression() {
+  const expressions = await client.pull_expressions();
   return (
-    <>
-      <Button>Example usage</Button>
-    </>
+    <AllExpressionsPage expressions={expressions}/>
   );
 }

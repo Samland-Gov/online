@@ -3,20 +3,19 @@
 @use '@carbon/react/scss/spacing' as *;
 @use '@carbon/react/scss/breakpoint' as *;
 @use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/colors' as *;
 
 .graph-tiles-container {
 	display: flex;
 	flex-wrap: wrap;
-}
-
-.graph-tile-container {
-	margin-right: 2px;
-	margin-bottom: 2px; 
-}
-
-.graph-tile-link {
-	display: block;
-	text-decoration: none;    
+	.cds--tile {
+		margin-right: 4px;
+		margin-bottom: 4px; 
+	}
+	.cds--link {
+		display: block;
+		text-decoration: none;
+	}
 }
 
 .graph-tile-content {
@@ -33,4 +32,5 @@
 .graph-tile-svg {
 	height: 10rem;
 	width: 10rem;
+	color: $blue-50;
 }

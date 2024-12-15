@@ -13,5 +13,5 @@ export interface Expression {
     languageCode: string;
     date: string;
     content: string;
-    tocJson: any; // Replace 'any' with a specific type if the structure of tocJson is known.
+    tocJson: any;
 }

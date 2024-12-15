@@ -1,7 +1,7 @@
 "use client";
 
 import { MainHeader } from "@/components/MainHeader/MainHeader";
-import { Content, Theme } from '@carbon/react';
+import { Theme } from '@carbon/react';
 
 import './global.scss';
 
@@ -15,7 +15,7 @@ export default function Providers({
             <Theme theme="g100">
                 <MainHeader/>
             </Theme>
-            <Content>{children}</Content>
+            {children}
         </div>
     );
 }

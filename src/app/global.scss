@@ -1,34 +1,36 @@
 @use '@carbon/react';
 @use '@carbon/react/scss/breakpoint' as *;
-
+@use '@carbon/react/scss/spacing' as *;
 
 @use '@/components/GraphTile/graph-tile';
 @use '@/components/Info/info';
 @use '@/components/MainHeader/main-header';
 @use '@/pages/home/landing-page';
 
-/// Remove overrides once Carbon bugs are fixed upstream.
-/// Need grid option to not add page gutters at large viewports, to also use when nesting grids
-/// @link https://github.com/carbon-design-system/carbon/issues/2792
-@media (min-width: 42rem) {
-  .cds--grid--no-gutter {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.home-page {
+  /// Remove overrides once Carbon bugs are fixed upstream.
+  /// Need grid option to not add page gutters at large viewports, to also use when nesting grids
+  /// @link https://github.com/carbon-design-system/carbon/issues/2792
+  @media (min-width: 42rem) {
+    .cds--grid--no-gutter {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
-}
 
-/// Padding was introduced in 10.3.0, needs an option to let grid set the viewport gutter
-/// @link https://github.com/carbon-design-system/carbon/issues/3010
-.cds--content {
-  margin-top: 3rem;
-  padding: 0;
-  //  background: var(--cds-background);
-}
+  /// Padding was introduced in 10.3.0, needs an option to let grid set the viewport gutter
+  /// @link https://github.com/carbon-design-system/carbon/issues/3010
+  .cds--content {
+    margin-top: 3rem;
+    padding: 0;
+    //  background: var(--cds-background);
+  }
 
-.cds--content .cds--css-grid {
-  max-width: 100%;
-  @include breakpoint(md) {
-    padding-left: 20px;
-    padding-right: 20px;
+  .cds--content .cds--css-grid {
+    max-width: 100%;
+    @include breakpoint(md) {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
 }
