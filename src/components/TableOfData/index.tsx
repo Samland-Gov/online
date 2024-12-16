@@ -51,6 +51,7 @@ const TableOfData = ({ rows, headers, title, description }: TableOfDataProps) =>
             <TableRow
               key={row.id}
               onClick={() => handleRowClick(row.href)}
+              onTouchStart={() => handleRowClick(row.href)}
               style={{
                 cursor: row.href ? 'pointer' : 'default', // Pointer cursor for rows with links
               }}
