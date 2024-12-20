@@ -102,7 +102,7 @@ const ExpressionTable = ({expressions, error}: {expressions: Row[], error?: stri
             field: 'frbrUri',
             renderCell: (row) => {
               return (
-                <BranchName href={row.href}>{row.href}</BranchName>
+                <BranchName href={row.href}>{row.frbrUri}</BranchName>
               )
             },
           },
