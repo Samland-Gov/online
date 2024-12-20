@@ -14,19 +14,31 @@ export class IndigoClient {
         this.default_language_code = default_language_code;
     }
 
-    private async request_with_token(url: string) {
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                // Authorization: `token ${import.meta.env.PRIVATE_INDIGO_API_KEY}`
-                Authorization: `token ${this.api_token}`
-            },
-        });
-          
-        if (!response.ok) {
-            throw new Error(`Failed to fetch data: ${response.statusText}`);
+    private async request_with_token(url: string, timeout: number = 100) {
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `token ${this.api_token}`
+                },
+                signal: controller.signal
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to fetch data: ${response.statusText}`);
+            }
+            return response;
+        } catch (error) {
+            if ((error as Error).name === 'AbortError') {
+                throw new Error('Request timed out');
+            }
+            throw error;
+        } finally {
+            clearTimeout(id);
         }
-        return response;
     }
 
     private async create_expression(data: Record<string, string>, work: Work) {

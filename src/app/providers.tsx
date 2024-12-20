@@ -1,7 +1,7 @@
 "use client";
 
-import { MainHeader } from "@/components/MainHeader/MainHeader";
-import { Theme } from '@carbon/react';
+import { MainHeader } from "@/components/MainHeader";
+import { ThemeProvider, BaseStyles } from '@primer/react'
 
 import '../styles/global.scss';
 import '../styles/law_widget_styles.css';
@@ -11,12 +11,12 @@ export default function Providers({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    return (
-        <div>
-            <Theme theme="g100">
-                <MainHeader/>
-            </Theme>
-            {children}
-        </div>
-    );
+  return (
+    <ThemeProvider>
+      <BaseStyles>
+        <MainHeader/>
+        {children}
+      </BaseStyles>
+    </ThemeProvider>
+  );
 }

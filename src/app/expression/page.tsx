@@ -1,4 +1,5 @@
 import { IndigoClient } from "@/api/legislation/api";
+import type { Expression } from "@/api/legislation/models";
 import AllExpressionsPage from "@/pages/expression/all_expressions";
 import { Metadata } from "next";
 
@@ -10,8 +11,14 @@ export const metadata: Metadata = {
 const client = new IndigoClient("https://legislation.minersonline.uk/api/v3/akn/zl/.json", (process.env.PRIVATE_INDIGO_API_KEY as unknown as string), "en");
 
 export default async function Expression() {
-  const expressions = await client.pull_expressions();
+  let expressions = [] as Expression[];
+  let error = null as string | null;
+  try {
+    expressions = await client.pull_expressions();
+  } catch (err) {
+    error = "Failed to fetch expressions";
+  }
   return (
-    <AllExpressionsPage expressions={expressions}/>
+    <AllExpressionsPage expressions={expressions} error={error || ""}/>
   );
 }
