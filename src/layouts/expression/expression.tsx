@@ -3,15 +3,11 @@
 import {
   Breadcrumbs,
   PageLayout,
-  VisuallyHidden,
-  BranchName,
   Box,
   Text,
   Heading,
-  StateLabel,
-  Link
 } from '@primer/react'
-import { BookIcon } from '@primer/octicons-react';
+
 import { TabNav } from '@primer/react/deprecated';
 
 import { Expression, PointInTime } from '@/api/legislation/models';

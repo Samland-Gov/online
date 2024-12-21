@@ -2,8 +2,6 @@ import {
   StateLabel,
   Link
 } from '@primer/react'
-import { GitCommitIcon } from '@primer/octicons-react';
-import { Octicon } from '@primer/react/deprecated';
 
 import { Amendment, ParentWork, PointInTime, Publication } from '@/api/legislation/models';
 

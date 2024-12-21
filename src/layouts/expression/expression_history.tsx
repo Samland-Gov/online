@@ -6,7 +6,6 @@ import {
   Box,
   Text,
   Heading,
-  StateLabel,
   Timeline,
 } from '@primer/react'
 import {  TabNav } from '@primer/react/deprecated';

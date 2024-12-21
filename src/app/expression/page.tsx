@@ -29,6 +29,7 @@ export default async function Expression() {
     expressions = await addTimeToExpressions(await client.pull_expressions());
   } catch (err) {
     error = "Failed to fetch expressions";
+    console.error(err);
   }
   return (
     <AllExpressionsPage expressions={expressions} error={error || ""}/>

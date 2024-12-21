@@ -6,7 +6,6 @@ import {
   PageLayout,
   VisuallyHidden,
   BranchName,
-  StateLabel
 } from '@primer/react'
 import { BookIcon } from '@primer/octicons-react';
 
