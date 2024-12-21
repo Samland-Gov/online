@@ -67,8 +67,8 @@ const ExpressionTable = ({expressions, error}: {expressions: Row[], error?: stri
       <Blankslate.Heading>There is no legislation.</Blankslate.Heading>
       <Blankslate.Description>
         We were unable to find any legislation in Samland.
-
-        (error && {error})
+        <br/>
+        {error}
       </Blankslate.Description>
       <Blankslate.PrimaryAction href="/">
         Go back to the homepage
@@ -100,11 +100,7 @@ const ExpressionTable = ({expressions, error}: {expressions: Row[], error?: stri
           {
             header: 'FRBR URI',
             field: 'frbrUri',
-            renderCell: (row) => {
-              return (
-                <BranchName href={row.href}>{row.frbrUri}</BranchName>
-              )
-            },
+            renderCell: (row) => <BranchName href={row.href}>{row.frbrUri}</BranchName>,
           },
           {
             header: 'Language code',

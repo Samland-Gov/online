@@ -1,4 +1,4 @@
-import {type Work, type Expression} from './models'
+import {type Work, type Expression, PointInTime} from './models'
 
 // const api_url = 'https://legislation.minersonline.uk/api/v3/akn/zl/.json';
 // const default_language_code = "en";
@@ -14,7 +14,7 @@ export class IndigoClient {
         this.default_language_code = default_language_code;
     }
 
-    private async request_with_token(url: string, timeout: number = 100) {
+    private async request_with_token(url: string, timeout: number = 500) {
         const controller = new AbortController();
         const id = setTimeout(() => controller.abort(), timeout);
 
@@ -118,5 +118,33 @@ export class IndigoClient {
             return work.expressions[0]
         }
         return undefined
+    }
+
+    public points_in_time(work: Work): PointInTime[] {
+        const points_in_time = [] as PointInTime[];
+        if (work.metadata.commencement_date) {
+            points_in_time.push({
+                type: "commencement",
+                date: new Date(work.metadata.commencement_date)
+            });
+        }
+        if (work.metadata.assent_date) {
+            points_in_time.push({
+                type: "assent",
+                date: new Date(work.metadata.assent_date)
+            });
+        }
+        if (work.metadata.publication_date) {
+            points_in_time.push({
+                type: "publication",
+                date: new Date(work.metadata.publication_date),
+                linkedObject: {
+                    date: new Date(work.metadata.publication_date),
+                    name: work.metadata.publication_name,
+                    number: work.metadata.publication_number
+                }
+            });
+        }
+        return points_in_time.sort((a, b) => b.date.getTime() - a.date.getTime());
     }
 }
