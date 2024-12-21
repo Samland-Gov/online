@@ -1,4 +1,4 @@
-import HomePage from "@/pages/home";
+import HomePage from "@/layouts/home";
 import { Metadata } from "next";
 import fs from 'fs'
 import path from 'path'

@@ -1,6 +1,6 @@
 import { IndigoClient } from "@/api/legislation/api";
 import type { Expression } from "@/api/legislation/models";
-import AllExpressionsPage, { ExpressionWithTime } from "@/pages/expression/all_expressions";
+import AllExpressionsPage, { ExpressionWithTime } from "@/layouts/expression/all_expressions";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

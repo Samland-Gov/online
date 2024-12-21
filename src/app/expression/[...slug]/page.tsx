@@ -1,5 +1,5 @@
 import { IndigoClient } from "@/api/legislation/api";
-import ExpressionPage from "@/pages/expression/expression";
+import ExpressionPage from "@/layouts/expression/expression";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 

@@ -1,24 +1,25 @@
-"use client"
+import { Metadata } from "next";
+import fs from 'fs'
+import path from 'path'
 
-import { Content } from '@carbon/react';
+import AlertsPage from "@/layouts/alerts";
+import { markdownToHtml } from '@/api/markdownToHtml'
 
-export default function Alerts() {
+export const metadata: Metadata = {
+  title: "Alerts - Samland Government",
+  description: "Emergency alerts in Samland",
+};
+
+export default async function Home() {
+  // Read the Markdown file from the file system
+  const filePath = path.join(process.cwd(), 'content', 'alerts.md')
+  const fileContent = fs.readFileSync(filePath, 'utf-8')
+
+  // Convert Markdown to HTML
+  const content = await markdownToHtml(fileContent)
+
   return (
-    <>
-      <Content>
-        <b>There are no current alerts </b>
-
-        <hr/>
-
-        <section>
-          <h2>About emergency alerts</h2>
-          <p>Emergency Alerts is a Samland government service that will warn you if there&rsquo;s a danger to life nearby.</p>
-          <p>In an emergency, your mobile phone, tablet, television, or radio will receive an alert with advice about how to stay safe.</p>
-          <blockquote>
-            The government does not need to know your phone number or location to send you an alert. 
-          </blockquote>
-        </section>
-      </Content>
-    </>
+    <AlertsPage content={content}/>
   );
 }
+
