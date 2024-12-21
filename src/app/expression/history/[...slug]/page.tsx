@@ -1,5 +1,5 @@
 import { IndigoClient } from "@/api/legislation/api";
-import ExpressionPage from "@/pages/expression/expression";
+import ExpressionHistory from "@/pages/expression/expression_history";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -38,7 +38,7 @@ export default async function Expression({
 
   return (
     <>
-      <ExpressionPage expression={exp} points_in_time={points}/>   
+      <ExpressionHistory expression={exp} points_in_time={points}/>   
     </>
   );
 }

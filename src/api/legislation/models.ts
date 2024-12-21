@@ -14,10 +14,17 @@ export interface WorkMetadata {
     commencement_date?: string;
     assent_date?: string;
     work_amendments: Amendment[];
+    parent_work?: ParentWork;
+    date: string;
+}
+
+export interface ParentWork {
+    frbr_uri: string;
+    title: string;
 }
 
 export interface Amendment {
-    date: string;
+    date: string | Date;
     amending_title: string;
     amending_uri: string;
 }
@@ -28,14 +35,10 @@ export interface Publication {
     number: string;
 }
 
-export interface LinkedDocument {
-    frbrUri: string;
-}
-
 export interface PointInTime {
-    type: "publication" | "commencement" | "assent";
+    type: "publication" | "commencement" | "assent" | "amendment" | "amended" | "repealed";
     date: Date;
-    linkedObject?: LinkedDocument | Publication;
+    linkedObject?: Publication | Amendment | ParentWork;
 }
 
 export interface TocNodeData {

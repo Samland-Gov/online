@@ -3,25 +3,20 @@
 import {
   Breadcrumbs,
   PageLayout,
-  VisuallyHidden,
-  BranchName,
   Box,
   Text,
   Heading,
   StateLabel,
-  Link
+  Timeline,
 } from '@primer/react'
-import { BookIcon } from '@primer/octicons-react';
-import { TabNav } from '@primer/react/deprecated';
+import {  TabNav } from '@primer/react/deprecated';
 
 import { Expression, PointInTime } from '@/api/legislation/models';
+import { getPointInTimeDescription, getPointInTimeIcon } from '@/api/legislation/history';
+import { getExpressionStatus } from '@/api/legislation/status';
 
-import TableOfContents from './contents';
-import { getExpressionStatus, getBanner } from '@/api/legislation/status';
-
-export default function ExpressionPage({expression, points_in_time}: {expression: Expression, points_in_time: PointInTime[]}) {
+export default function ExpressionHistory({expression, points_in_time}: {expression: Expression, points_in_time: PointInTime[]}) {
   if (expression) {
-    const tocJson = expression.tocJson.toc;
     return (
       <>
         <PageLayout>
@@ -66,15 +61,14 @@ export default function ExpressionPage({expression, points_in_time}: {expression
                 </Box>
               </Box>
               <TabNav>
-                <TabNav.Link href={`/expression/${expression.frbrUri}`} selected>
+                <TabNav.Link href={`/expression/${expression.frbrUri}`}>
                   Content
                 </TabNav.Link>
-                <TabNav.Link href={`/expression/history${expression.frbrUri}`}>History</TabNav.Link>
+                <TabNav.Link href={`/expression/history${expression.frbrUri}`} selected>History</TabNav.Link>
               </TabNav>
             </Box>
           </PageLayout.Header>
           <PageLayout.Content>
-            {getBanner(points_in_time)}
             <Box
               sx={{
                 maxWidth: '100%',
@@ -87,28 +81,26 @@ export default function ExpressionPage({expression, points_in_time}: {expression
               }}
               tabIndex={0}
             >
-              <la-decorate-terms popup-definitions link-terms/>
-              <la-decorate-internal-refs popups flag/>
-              <la-akoma-ntoso frbr-expression-uri={ expression?.frbrUri } dangerouslySetInnerHTML={{ __html: expression.content }}/>
+              <Timeline>
+                {points_in_time.map((point, index) => (
+                  <Timeline.Item key={index}>
+                    <Timeline.Badge>
+                      {getPointInTimeIcon(point)}
+                    </Timeline.Badge>
+                    <Timeline.Body>
+                      <Text>{getPointInTimeDescription(point, "/expression/history")}</Text>
+                    </Timeline.Body>
+                  </Timeline.Item>
+                ))}
+              </Timeline>
             </Box>
           </PageLayout.Content>
-          <PageLayout.Pane>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 3,
-              }}
-            >
-              <TableOfContents label='Table of contents' data={tocJson} base_url={`/expression/${expression.frbrUri}/#`}></TableOfContents>
-            </Box>
-          </PageLayout.Pane>
         </PageLayout>
       </>
     );
   }
   return (
     <>
-    </>
+    </> 
   );
 }

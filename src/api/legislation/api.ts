@@ -120,8 +120,33 @@ export class IndigoClient {
         return undefined
     }
 
-    public points_in_time(work: Work): PointInTime[] {
+    public async get_work(frbrUri: string): Promise<Work | undefined> {
+        const works = await this.pull_works();
+        for (const work of works) {
+            if (work.frbrUri == frbrUri) {
+                return work;
+            }
+        }
+        return undefined;
+    }
+
+    public async points_in_time(work: Work): Promise<PointInTime[]> {
         const points_in_time = [] as PointInTime[];
+        for (const amendment of work.metadata.work_amendments) {
+            const work = await this.get_work(amendment.amending_uri);
+            if (work == undefined) {
+                continue;
+            }
+            points_in_time.push({
+                type: "amendment",
+                date: new Date(amendment.date),
+                linkedObject: {
+                    date: new Date(amendment.date),
+                    amending_uri: this.default_expression(work)?.frbrUri || "",
+                    amending_title: amendment.amending_title
+                }
+            });
+        }
         if (work.metadata.commencement_date) {
             points_in_time.push({
                 type: "commencement",
@@ -142,6 +167,16 @@ export class IndigoClient {
                     date: new Date(work.metadata.publication_date),
                     name: work.metadata.publication_name,
                     number: work.metadata.publication_number
+                }
+            });
+        }
+        if (work.metadata.parent_work) {
+            points_in_time.push({
+                type: "amended",
+                date: new Date(work.metadata.date),
+                linkedObject: {
+                    frbr_uri: this.default_expression(work)?.frbrUri || "",
+                    title: work.metadata.parent_work.title,
                 }
             });
         }

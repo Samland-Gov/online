@@ -5,34 +5,42 @@ import {
   Breadcrumbs,
   PageLayout,
   VisuallyHidden,
-  BranchName
+  BranchName,
+  StateLabel
 } from '@primer/react'
 import { BookIcon } from '@primer/octicons-react';
 
 import Link from 'next/link';
+import { Expression, PointInTime } from '@/api/legislation/models';
+import { getExpressionStatus } from '@/api/legislation/status';
 
-import { Expression } from '@/api/legislation/models';
-
-interface Row {
+export interface ExpressionRow {
   id: string;
   title: string;
   date: string;
   frbrUri: string;
   languageCode: string;
   href: string;
+  state: () => React.ReactNode;
 }
 
-function convertToRows(expressions: Expression[]): Row[] {
+export interface ExpressionWithTime extends Expression {
+  points_in_time: PointInTime[];
+}
+
+function convertToRows(expressions: ExpressionWithTime[]): ExpressionRow[] {
   const rows = [];
   if (expressions) {
     for (const expression of expressions) {
+      const status = getExpressionStatus(expression.points_in_time || [], "small");
       rows.push({
         id: expression.frbrUri,
         title: expression.title,
         date: new Date(expression.date).toDateString(),
         frbrUri: expression.frbrUri,
         languageCode: expression.languageCode,
-        href: `/expression${expression.frbrUri}`
+        href: `/expression${expression.frbrUri}`,
+        state: () => status,
       })
     }
   }
@@ -40,7 +48,7 @@ function convertToRows(expressions: Expression[]): Row[] {
   return rows;
 }
 
-export default function AllExpressionsPage({expressions, error}: {expressions: Expression[], error?: string}) {
+export default function AllExpressionsPage({expressions, error}: {expressions: ExpressionWithTime[], error?: string}) {
   const rows = convertToRows(expressions);
   return (
     <>
@@ -50,7 +58,7 @@ export default function AllExpressionsPage({expressions, error}: {expressions: E
             <Breadcrumbs.Item href="/">Home</Breadcrumbs.Item>
             <Breadcrumbs.Item href="/expression" selected>Legislation</Breadcrumbs.Item>
           </Breadcrumbs>
-          <ExpressionTable expressions={rows} error={error} />
+          <ExpressionTable rows={rows} error={error} />
         </PageLayout.Content>
       </PageLayout>
     </>
@@ -58,8 +66,8 @@ export default function AllExpressionsPage({expressions, error}: {expressions: E
 }
 
 
-const ExpressionTable = ({expressions, error}: {expressions: Row[], error?: string}) => {
-  return expressions.length === 0 ? (
+const ExpressionTable = ({rows, error}: {rows: ExpressionRow[], error?: string}) => {
+  return rows.length === 0 ? (
     <Blankslate border>
       <Blankslate.Visual>
         <BookIcon size="medium" />
@@ -85,12 +93,17 @@ const ExpressionTable = ({expressions, error}: {expressions: Row[], error?: stri
       <DataTable
         aria-labelledby="legislation"
         aria-describedby="legislation-subtitle"
-        data={expressions}
+        data={rows}
         columns={[
           {
             header: 'Title',
             field: 'title',
             rowHeader: true,
+          },
+          {
+            id: 'status',
+            header: () => "Status",
+            renderCell: (row) => row.state(),
           },
           {
             header: 'Date created',
